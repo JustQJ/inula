@@ -3,7 +3,6 @@ run-name: ${{ github.actor }} is sync code from gitee inula
 
 on:
   workflow_dispatch: 
-    -branch: master
   schedule:
     - cron: '0 0 * * *'
 
@@ -12,9 +11,9 @@ jobs:
     name: sync gitee to github for inula
     runs-on: ubuntu-latest
     steps:
-      -name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
-      -name: sync
+      - name: sync
         uses: Yikun/hub-mirror-action@master
         with:
           src: gitee/JustJQ

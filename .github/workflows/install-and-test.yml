@@ -1,27 +1,22 @@
-name: sync-gitee-to-github-inula
-run-name: ${{ github.actor }} is sync code from gitee inula
-
-on:
-  workflow_dispatch: 
-    -branch: master
-  schedule:
-    - cron: '0 0 * * *'
-
+name: install-and-test-inula
+run-name: ${{ github.actor }} does install and test cases.
+on: 
+  push:
+    branches: 
+    - master
+  pull_request:
+    branches: 
+    - master
 jobs:
-  run:
-    name: sync gitee to github for inula
+  verify-test-cases:
     runs-on: ubuntu-latest
     steps:
-      -name: Checkout
-        uses: actions/checkout@v4
-      -name: sync
-        uses: Yikun/hub-mirror-action@master
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          src: gitee/JustJQ
-          dst: github/JustQJ
-          dst_key: ${{ secrets.GIT_PRIVATE_KEY }}
-          dst_token: ${{ secrets.GIT_TOKEN }}
-          static_list: 'inula'
-          account_type: user
-          force_update: true
-      
+          node-version: '16.15.0'
+      - run: npm install -g pnpm
+      - run: npm list -g
+      - run: npm install --force
+      - run: npm run test:inula
+      - run: npm run lint

@@ -1,0 +1,29 @@
+name: SonarCloud-code-analysis 
+run-name: ${{ github.actor }} is using sonarcloud to analyze the inula code
+on: 
+  push:
+    branches:
+        - master
+  workflow_dispatch:
+
+jobs:
+  run:
+    name: build and analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source codes 
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16.15.0'
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+            projectBaseDir: .
+            args: >
+                -Dsonar.organization=justqj
+                -Dsonar.projectKey=JustQJ_inula
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    

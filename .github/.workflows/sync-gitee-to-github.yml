@@ -1,0 +1,27 @@
+name: sync-gitee-to-github-inula
+run-name: ${{ github.actor }} is sync code from gitee inula
+
+on:
+  workflow_dispatch: 
+    -branch: master
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  run:
+    name: sync gitee to github for inula
+    runs-on: ubuntu-latest
+    steps:
+      -name: Checkout
+        uses: actions/checkout@v4
+      -name: sync
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: gitee/JustJQ
+          dst: github/JustQJ
+          dst_key: ${{ secrets.GIT_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GIT_TOKEN }}
+          static_list: 'inula'
+          account_type: user
+          force_update: true
+      

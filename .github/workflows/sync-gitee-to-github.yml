@@ -2,6 +2,9 @@ name: sync-gitee-to-github-inula
 run-name: ${{ github.actor }} is sync code from gitee inula
 
 on:
+  repository_dispatch:
+    types:
+      - push_hook
   workflow_dispatch: 
   schedule:
     - cron: '0 0 * * *'

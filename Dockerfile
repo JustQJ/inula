@@ -8,10 +8,8 @@ WORKDIR /usr/src/inula
 
 RUN npm install -g pnpm
 
-RUN npm list -g
-
 RUN npm install --force
 
-RUN npm run test:inula
-
 RUN npm install openinula
+
+RUN npm list -g

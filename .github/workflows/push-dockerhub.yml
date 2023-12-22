@@ -11,9 +11,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build Image
         run: |
-          docker build -t arctanln2/inula -f Dockerfile .
+          docker build -t newplayertp/inula -f Dockerfile .
       - name: Login to Registry
         run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
       - name: Push Image
         run: |
-          docker push arctanln2/inula
+          docker push newplayertp/inula

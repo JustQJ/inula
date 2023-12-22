@@ -1,0 +1,19 @@
+name: Docker Image CI/CD
+run-name: ${{ github.actor }} push image to dockerhub.
+on:
+  push:
+    branches: [ master ]
+jobs:
+  # 构建并上传 Docker镜像
+  build: 
+    runs-on: ubuntu-latest # 依赖的环境      
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Image
+        run: |
+          docker build -t arctanln2/inula -f Dockerfile .
+      - name: Login to Registry
+        run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push Image
+        run: |
+          docker push arctanln2/inula

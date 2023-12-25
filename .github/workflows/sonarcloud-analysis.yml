@@ -1,9 +1,16 @@
 name: SonarCloud-code-analysis 
 run-name: ${{ github.actor }} is using sonarcloud to analyze the inula code
 on: 
-  push:
-    branches:
-        - master
+  # push:
+  #   branches:
+  #       - master
+  workflow_run:
+    workflows: ["install-and-test.yml"] # run after build and test workflow
+    branches: [master]
+    types:
+      - succeeded
+    # paths:
+    #   - 'inula/**'
   workflow_dispatch:
 
 jobs:

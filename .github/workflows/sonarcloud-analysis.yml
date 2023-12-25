@@ -5,10 +5,10 @@ on:
   #   branches:
   #       - master
   workflow_run:
-    workflows: ["install-and-test.yml"] # run after build and test workflow
+    workflows: ["install-and-test-inula"] # run after build and test workflow
     branches: [master]
     types:
-      - succeeded
+      - completed
     # paths:
     #   - 'inula/**'
   workflow_dispatch:

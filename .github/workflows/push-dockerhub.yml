@@ -2,9 +2,9 @@ name: Docker Image CI/CD
 run-name: ${{ github.actor }} push image to dockerhub.
 on:
   workflow_run:
-    workflows: ["release-action.yml"] # run after build and test workflow
+    workflows: ["Release"] # run after build and test workflow
     types:
-      - succeeded
+      - completed
 jobs:
   # 构建并上传 Docker镜像
   build: 

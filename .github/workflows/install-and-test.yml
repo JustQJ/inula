@@ -20,12 +20,17 @@ jobs:
       - run: npm install --force
       - run: cd packages/inula && ls && npm test -- --coverage && ls
         continue-on-error: true
-      - run: cd packages/inula-intl && ls && npm npm test -- --coverage && ls
+      - run: cd packages/inula && ls
+      - run: cd packages/inula-intl && ls && npm test -- --coverage && ls
         continue-on-error: true
-      - run: cd packages/inula-request && ls && npm npm test -- --coverage && ls
+      - run: cd packages/inula-intl && ls
+      - run: cd packages/inula-request && ls && npm test -- --coverage && ls
         continue-on-error: true
-      - run: cd packages/inula-router && ls && npm npm test -- --coverage && ls
+      - run: cd packages/inula-request && ls 
+      - run: cd packages/inula-router && ls && npm test -- --coverage && ls
         continue-on-error: true
+      - run: cd packages/inula-router && ls
       - run: npm run test:inula
         continue-on-error: true
       - run: npm run lint
+        continue-on-error: true

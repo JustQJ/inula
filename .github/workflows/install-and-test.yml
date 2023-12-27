@@ -17,7 +17,7 @@ jobs:
           node-version: '16.15.0'
       - run: npm install -g pnpm
       - run: npm list -g
-      - run: npm install
+      - run: npm install --force
       - run: cd packages/inula && npm npm test -- --coverage
       - run: cd packages/inula-intl && ls && npm npm test -- --coverage && ls
       - run: cd packages/inula-intl && ls && npm npm test -- --coverage && ls

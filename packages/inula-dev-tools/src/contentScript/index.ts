@@ -41,7 +41,10 @@ window.addEventListener(
   'message',
   event => {
     // 只监听来自本页面的消息
-    if (event.source !== window) {
+    // if (event.source !== window) {
+    //   return;
+    // }
+    if (event.origin !== window.location.origin) {
       return;
     }
 

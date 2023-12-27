@@ -465,7 +465,7 @@ function injectHook() {
 
   window.addEventListener('message', function (event) {
     // 只接收我们自己的消息
-    if (event.source !== window) {
+    if (event.origin !== window.location.origin) {
       return;
     }
     const request = event.data;

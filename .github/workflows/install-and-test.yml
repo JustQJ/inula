@@ -48,5 +48,5 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $SERVER_IP_ADDRESS >> ~/.ssh/known_hosts
           ssh $SERVER_UER_NAME@$SERVER_IP_ADDRESS "ls"
-          scp -r packages/inula/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula/
-          scp -r packages/inula-request/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula-request/
+          scp -r packages/inula/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/data/inula/
+          scp -r packages/inula-request/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/data/inula-request/

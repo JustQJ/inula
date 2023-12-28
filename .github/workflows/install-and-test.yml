@@ -15,22 +15,42 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '16.15.0'
+      
       - run: npm install -g pnpm
       - run: npm list -g
       - run: npm install --force
-      - run: cd packages/inula && ls && npm test -- --coverage && ls
+      - run: cd packages/inula && ls && npm test -- --coverage
         continue-on-error: true
       - run: cd packages/inula && ls
-      - run: cd packages/inula-intl && ls && npm test -- --coverage && ls
+      #- run: ssh $SERVER_UER_NAME@$SERVER_IP_ADDRESS "rm -rf /home/$SERVER_UER_NAME/inula_coverage/inula/coverage"
+      #- run: scp -r packages/inula/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula/
+      - run: cd packages/inula-intl && ls && npm test -- --coverage 
         continue-on-error: true
       - run: cd packages/inula-intl && ls
-      - run: cd packages/inula-request && ls && npm test -- --coverage && ls
+      - run: cd packages/inula-request && ls && npm test -- --coverage 
         continue-on-error: true
       - run: cd packages/inula-request && ls 
-      - run: cd packages/inula-router && ls && npm test -- --coverage && ls
+      #- run: ssh $SERVER_UER_NAME@$SERVER_IP_ADDRESS "rm -rf /home/$SERVER_UER_NAME/inula_coverage/inula-request/coverage"
+      #- run: scp -r packages/inula-request/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula-request/
+      - run: cd packages/inula-router && ls && npm test -- --coverage 
         continue-on-error: true
       - run: cd packages/inula-router && ls
       - run: npm run test:inula
         continue-on-error: true
       - run: npm run lint
         continue-on-error: true
+      
+      - name: install ssh client
+        env:
+          SERVER_SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
+          SERVER_UER_NAME: ${{ secrets.SERVER_USER_NAME }}
+          SERVER_IP_ADDRESS: ${{ secrets.SERVER_IP }}
+        run: |
+          sudo apt-get install openssh-client
+          mkdir -p ~/.ssh/
+          echo "$SERVER_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 'remote_host' >> ~/.ssh/known_hosts
+          ssh-keygen -F 'remote_host' || ssh-keyscan 'remote_host' >> ~/.ssh/known_hosts
+          scp -r packages/inula/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula/
+          scp -r packages/inula-request/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula-request/

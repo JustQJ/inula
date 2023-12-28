@@ -22,16 +22,12 @@ jobs:
       - run: cd packages/inula && ls && npm test -- --coverage
         continue-on-error: true
       - run: cd packages/inula && ls
-      #- run: ssh $SERVER_UER_NAME@$SERVER_IP_ADDRESS "rm -rf /home/$SERVER_UER_NAME/inula_coverage/inula/coverage"
-      #- run: scp -r packages/inula/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula/
       - run: cd packages/inula-intl && ls && npm test -- --coverage 
         continue-on-error: true
       - run: cd packages/inula-intl && ls
       - run: cd packages/inula-request && ls && npm test -- --coverage 
         continue-on-error: true
       - run: cd packages/inula-request && ls 
-      #- run: ssh $SERVER_UER_NAME@$SERVER_IP_ADDRESS "rm -rf /home/$SERVER_UER_NAME/inula_coverage/inula-request/coverage"
-      #- run: scp -r packages/inula-request/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula-request/
       - run: cd packages/inula-router && ls && npm test -- --coverage 
         continue-on-error: true
       - run: cd packages/inula-router && ls
@@ -50,8 +46,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SERVER_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 'remote_host' >> ~/.ssh/known_hosts
-          ssh-keygen -F 'remote_host' || ssh-keyscan 'remote_host' >> ~/.ssh/known_hosts
+          ssh-keyscan $SERVER_IP_ADDRESS >> ~/.ssh/known_hosts
           ssh $SERVER_UER_NAME@$SERVER_IP_ADDRESS "ls"
           scp -r packages/inula/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula/
           scp -r packages/inula-request/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/home/$SERVER_UER_NAME/inula_coverage/inula-request/

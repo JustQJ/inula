@@ -15,27 +15,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '16.15.0'
-      
-      - run: npm install -g pnpm
-      - run: npm list -g
-      - run: npm install --force
-      - run: cd packages/inula && ls && npm test -- --coverage
+      - name: install dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install --force
+      - name: run test
         continue-on-error: true
-      - run: cd packages/inula && ls
-      - run: cd packages/inula-intl && ls && npm test -- --coverage 
+        run: |
+          pnpm run test:inula
+          pnpm run lint
+      - name: run test coverage
         continue-on-error: true
-      - run: cd packages/inula-intl && ls
-      - run: cd packages/inula-request && ls && npm test -- --coverage 
-        continue-on-error: true
-      - run: cd packages/inula-request && ls 
-      - run: cd packages/inula-router && ls && npm test -- --coverage 
-        continue-on-error: true
-      - run: cd packages/inula-router && ls
-      - run: npm run test:inula
-        continue-on-error: true
-      - run: npm run lint
-        continue-on-error: true
-      
+        run: |
+          cd ${GITHUB_WORKSPACE}/packages/inula && ls && npm test -- --coverage
+          cd ${GITHUB_WORKSPACE}/packages/inula-intl && ls && npm test -- --coverage 
+          cd ${GITHUB_WORKSPACE}/packages/inula-request && ls && npm test -- --coverage
+          cd ${GITHUB_WORKSPACE}/packages/inula-router && ls && npm test -- --coverage
       - name: install ssh client
         env:
           SERVER_SSH_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}

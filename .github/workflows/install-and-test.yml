@@ -45,3 +45,5 @@ jobs:
           ssh $SERVER_UER_NAME@$SERVER_IP_ADDRESS "ls"
           scp -r packages/inula/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/data/inula-packages/inula/
           scp -r packages/inula-request/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/data/inula-packages/inula-request/
+          scp -r packages/inula-intl/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/data/inula-packages/inula-intl/
+          scp -r packages/inula-router/coverage $SERVER_UER_NAME@$SERVER_IP_ADDRESS:/data/inula-packages/inula-router/
